@@ -1,0 +1,15 @@
+[project]
+name = "greencard"
+version = "0.1.0"
+description = "A personal issue tracker that runs entirely from the command line"
+requires-python = ">=3.9"
+
+[project.scripts]
+greencard = "main:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["main", "issues", "projects", "search", "models", "storage", "display"]

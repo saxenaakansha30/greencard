@@ -6,41 +6,65 @@ A personal issue tracker that runs entirely from the command line. No server, no
 
 Python 3.9+
 
+## Install
+
+```bash
+git clone <this-repo>
+cd greencard
+python3 -m venv .venv
+source .venv/bin/activate   # on Windows: .venv\Scripts\activate
+pip install -e .
+```
+
+This puts a `greencard` command on your `PATH` inside the virtual
+environment (via pip's console-script mechanism) — no shell aliases or
+system-wide PATH edits needed. Data is still stored next to the source in
+`data/`, regardless of which directory you run `greencard` from.
+
+Since `greencard` only lives inside the venv, `activate` it in any new
+shell session before using the command:
+
+```bash
+cd greencard
+source .venv/bin/activate
+greencard list
+```
+
 ## Usage
 
 ### Projects
 
 ```bash
 # Add a project
-python main.py project add <id> <name> --desc "optional description"
-python main.py project add gc "Greencard"
+greencard project add <id> <name> --desc "optional description"
+greencard project add gc "Greencard"
 
 # List projects
-python main.py project list
+greencard project list
 ```
 
 ### Issues
 
 ```bash
 # Add an issue
-python main.py add <title> --project <id> --priority <low|medium|high> --desc "..." --tags tag1 tag2
-python main.py add "Fix login bug" --project gc --priority high --tags bug auth
+greencard add <title> --project <id> --priority <low|medium|high> --desc "..." --tags tag1 tag2
+greencard add "Fix login bug" --project gc --priority high --tags bug auth
 
 # List issues (all filters optional)
-python main.py list
-python main.py list --project gc
-python main.py list --status in_progress
-python main.py list --priority high
+greencard list
+greencard list --project gc
+greencard list --status in_progress
+greencard list --priority high
 
 # Show full details of an issue
-python main.py show <id>
+greencard show <id>
 
 # Update an issue
-python main.py update <id> --status <todo|in_progress|done>
-python main.py update <id> --priority high --title "New title"
+greencard update <id> --status <todo|in_progress|done>
+greencard update <id> --priority high --title "New title"
 
 # Delete an issue
-python main.py delete <id>
+greencard delete <id>
 ```
 
 ### Search
@@ -48,7 +72,7 @@ python main.py delete <id>
 Searches across title, description, and tags.
 
 ```bash
-python main.py search "login"
+greencard search "login"
 ```
 
 ## Data
