@@ -16,7 +16,7 @@ def main():
     p_add.add_argument("--desc", default="")
     p_add.add_argument("--tags", nargs="*", default=[])
 
-    p_list = sub.add_parser("list", help="List issues")
+    p_list = sub.add_parser("list", aliases=["ls"], help="List issues")
     p_list.add_argument("--project")
     p_list.add_argument("--status", choices=["todo", "in_progress", "done"])
     p_list.add_argument("--priority", choices=["low", "medium", "high"])
@@ -45,13 +45,21 @@ def main():
     p_proj_add.add_argument("name")
     p_proj_add.add_argument("--desc", default="")
 
-    proj_sub.add_parser("list", help="List projects")
+    proj_sub.add_parser("list", aliases=["ls"], help="List projects")
+
+    p_proj_update = proj_sub.add_parser("update", help="Update a project")
+    p_proj_update.add_argument("id")
+    p_proj_update.add_argument("--name")
+    p_proj_update.add_argument("--desc")
+
+    p_proj_delete = proj_sub.add_parser("delete", help="Delete a project")
+    p_proj_delete.add_argument("id")
 
     args = parser.parse_args()
 
     if args.cmd == "add":
         issues.add(args.title, args.project, args.priority, args.desc, args.tags)
-    elif args.cmd == "list":
+    elif args.cmd in ("list", "ls"):
         issues.list_issues(args.project, args.status, args.priority)
     elif args.cmd == "update":
         issues.update(args.id, args.status, args.priority, args.title, args.desc)
@@ -64,8 +72,12 @@ def main():
     elif args.cmd == "project":
         if args.proj_cmd == "add":
             projects.add(args.id, args.name, args.desc)
-        elif args.proj_cmd == "list":
+        elif args.proj_cmd in ("list", "ls"):
             projects.list_projects()
+        elif args.proj_cmd == "update":
+            projects.update(args.id, args.name, args.desc)
+        elif args.proj_cmd == "delete":
+            projects.delete(args.id)
         else:
             p_project.print_help()
     else:

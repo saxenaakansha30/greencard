@@ -19,7 +19,7 @@ def add(title: str, project_id: str, priority: str, description: str, tags: list
 
     projects = storage.load_projects()
     if not any(p.id == project_id for p in projects):
-        print(f"Project '{project_id}' not found. Create it first: python main.py project add <id> <name>")
+        print(f"Project '{project_id}' not found. Create it first: greencard project add <id> <name>")
         return
 
     issues = storage.load_issues()

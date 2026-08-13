@@ -16,10 +16,12 @@ source .venv/bin/activate   # on Windows: .venv\Scripts\activate
 pip install -e .
 ```
 
-This puts a `greencard` command on your `PATH` inside the virtual
-environment (via pip's console-script mechanism) — no shell aliases or
-system-wide PATH edits needed. Data is still stored next to the source in
-`data/`, regardless of which directory you run `greencard` from.
+This puts both `greencard` and its short form `gc` on your `PATH` inside
+the virtual environment (via pip's console-script mechanism) — no shell
+aliases or system-wide PATH edits needed. Data is still stored next to the
+source in `data/`, regardless of which directory you run the command from.
+
+`list` also has a short alias, `ls` (e.g. `gc ls`, `gc project ls`).
 
 Since `greencard` only lives inside the venv, `activate` it in any new
 shell session before using the command:
@@ -27,7 +29,7 @@ shell session before using the command:
 ```bash
 cd greencard
 source .venv/bin/activate
-greencard list
+gc list
 ```
 
 ## Usage
@@ -36,35 +38,42 @@ greencard list
 
 ```bash
 # Add a project
-greencard project add <id> <name> --desc "optional description"
-greencard project add gc "Greencard"
+gc project add <id> <name> --desc "optional description"
+gc project add app "My App"
 
-# List projects
-greencard project list
+# List projects (alias: ls)
+gc project list
+gc project ls
+
+# Update a project
+gc project update app --name "New Name" --desc "New description"
+
+# Delete a project (blocked while issues still reference it)
+gc project delete app
 ```
 
 ### Issues
 
 ```bash
 # Add an issue
-greencard add <title> --project <id> --priority <low|medium|high> --desc "..." --tags tag1 tag2
-greencard add "Fix login bug" --project gc --priority high --tags bug auth
+gc add <title> --project <id> --priority <low|medium|high> --desc "..." --tags tag1 tag2
+gc add "Fix login bug" --project app --priority high --tags bug auth
 
-# List issues (all filters optional)
-greencard list
-greencard list --project gc
-greencard list --status in_progress
-greencard list --priority high
+# List issues (all filters optional; alias: ls)
+gc list
+gc ls --project app
+gc list --status in_progress
+gc list --priority high
 
 # Show full details of an issue
-greencard show <id>
+gc show <id>
 
 # Update an issue
-greencard update <id> --status <todo|in_progress|done>
-greencard update <id> --priority high --title "New title"
+gc update <id> --status <todo|in_progress|done>
+gc update <id> --priority high --title "New title"
 
 # Delete an issue
-greencard delete <id>
+gc delete <id>
 ```
 
 ### Search
@@ -72,7 +81,7 @@ greencard delete <id>
 Searches across title, description, and tags.
 
 ```bash
-greencard search "login"
+gc search "login"
 ```
 
 ## Data
