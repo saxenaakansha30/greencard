@@ -38,7 +38,7 @@ def add(title: str, project_id: str, priority: str, description: str, tags: list
     print(f"Created issue #{issue.id}: {issue.title}")
 
 
-def list_issues(project: str, status: str, priority: str):
+def list_issues(project: str, status: str, priority: str, limit: int = None):
     issues = storage.load_issues()
     if project:
         issues = [i for i in issues if i.project == project]
@@ -46,7 +46,7 @@ def list_issues(project: str, status: str, priority: str):
         issues = [i for i in issues if i.status == status]
     if priority:
         issues = [i for i in issues if i.priority == priority]
-    display.print_issues(issues)
+    display.print_issues(issues, limit)
 
 
 def update(issue_id: int, status: str, priority: str, title: str, description: str):

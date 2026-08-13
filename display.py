@@ -3,11 +3,13 @@ from models import Issue, Project
 _PRIORITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 
 
-def print_issues(issues: list[Issue]):
+def print_issues(issues: list[Issue], limit: int = None):
     if not issues:
         print("No issues found.")
         return
     issues = sorted(issues, key=lambda i: (_PRIORITY_ORDER.get(i.priority, 1), i.id))
+    if limit:
+        issues = issues[:limit]
     print(f"{'ID':<5} {'PROJECT':<12} {'STATUS':<15} {'PRIORITY':<10} TITLE")
     print("-" * 70)
     for i in issues:

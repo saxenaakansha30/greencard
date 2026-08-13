@@ -20,6 +20,7 @@ def main():
     p_list.add_argument("--project")
     p_list.add_argument("--status", choices=["todo", "in_progress", "done"])
     p_list.add_argument("--priority", choices=["low", "medium", "high"])
+    p_list.add_argument("--limit", type=int)
 
     p_update = sub.add_parser("update", help="Update an issue")
     p_update.add_argument("id", type=int)
@@ -60,7 +61,7 @@ def main():
     if args.cmd == "add":
         issues.add(args.title, args.project, args.priority, args.desc, args.tags)
     elif args.cmd in ("list", "ls"):
-        issues.list_issues(args.project, args.status, args.priority)
+        issues.list_issues(args.project, args.status, args.priority, args.limit)
     elif args.cmd == "update":
         issues.update(args.id, args.status, args.priority, args.title, args.desc)
     elif args.cmd == "delete":

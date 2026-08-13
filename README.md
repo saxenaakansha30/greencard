@@ -46,9 +46,11 @@ gc project list
 gc project ls
 
 # Update a project
-gc project update app --name "New Name" --desc "New description"
+gc project update <id> --name "New Name" --desc "New description"
+gc project update app --name "My App v2"
 
 # Delete a project (blocked while issues still reference it)
+gc project delete <id>
 gc project delete app
 ```
 
@@ -64,6 +66,7 @@ gc list
 gc ls --project app
 gc list --status in_progress
 gc list --priority high
+gc list --limit 5
 
 # Show full details of an issue
 gc show <id>
