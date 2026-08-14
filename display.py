@@ -2,6 +2,31 @@ from models import Issue, Project
 
 _PRIORITY_ORDER = {"high": 0, "medium": 1, "low": 2}
 
+_RESET = "\033[0m"
+_RED = "\033[31m"
+_BLUE = "\033[34m"
+_GREEN = "\033[32m"
+
+_STATUS_COLORS = {
+    "done": _GREEN,
+    "in_progress": _BLUE,
+    "todo": _RED,
+}
+
+_PRIORITY_COLORS = {
+    "high": _RED,
+    "medium": _BLUE,
+    "low": _GREEN,
+}
+
+
+def _colorize(text: str, color: str) -> str:
+    return f"{color}{text}{_RESET}"
+
+
+def _padded_colorize(text: str, width: int, color: str) -> str:
+    return _colorize(text, color) + " " * (width - len(text))
+
 
 def print_issues(issues: list[Issue], limit: int = None):
     if not issues:
@@ -13,7 +38,9 @@ def print_issues(issues: list[Issue], limit: int = None):
     print(f"{'ID':<5} {'PROJECT':<12} {'STATUS':<15} {'PRIORITY':<10} TITLE")
     print("-" * 70)
     for i in issues:
-        print(f"{i.id:<5} {i.project:<12} {i.status:<15} {i.priority:<10} {i.title}")
+        status = _padded_colorize(i.status, 15, _STATUS_COLORS.get(i.status, ""))
+        priority = _padded_colorize(i.priority, 10, _PRIORITY_COLORS.get(i.priority, ""))
+        print(f"{i.id:<5} {i.project:<12} {status} {priority} {i.title}")
 
 
 def print_issue(issue: Issue):
